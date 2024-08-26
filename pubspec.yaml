@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.5.0+1
   device_preview: ^1.2.0
   flutter_screenutil: ^5.9.3
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +66,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/women_shop/
+    - assets/images/news/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
