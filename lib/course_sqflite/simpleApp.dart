@@ -20,8 +20,9 @@ class _SimpleAppState extends State<SimpleApp> {
         children: [
           Center(
             child: MaterialButton(
-              onPressed: () async{
-                int response = await sqlDb.insetData("INSERT INTO 'notes' ('note') VALUES ('note two')");
+              onPressed: () async {
+                int response = await sqlDb.insetData(
+                    "INSERT INTO 'notes' ('note') VALUES ('note one')");
                 print(response);
               },
               color: Colors.red,
@@ -31,8 +32,9 @@ class _SimpleAppState extends State<SimpleApp> {
           ),
           Center(
             child: MaterialButton(
-              onPressed: () async{
-                List<Map> response = await sqlDb.readData("SELECT * FROM 'notes'");
+              onPressed: () async {
+                List<Map> response =
+                    await sqlDb.readData("SELECT * FROM 'notes'");
                 print(response);
               },
               color: Colors.red,
@@ -42,8 +44,9 @@ class _SimpleAppState extends State<SimpleApp> {
           ),
           Center(
             child: MaterialButton(
-              onPressed: () async{
-                int response = await sqlDb.deleteData("DELETE FROM 'notes' WHERE id = 8");
+              onPressed: () async {
+                int response =
+                    await sqlDb.deleteData("DELETE FROM 'notes' WHERE id = 8");
                 print(response);
               },
               color: Colors.red,
@@ -53,8 +56,9 @@ class _SimpleAppState extends State<SimpleApp> {
           ),
           Center(
             child: MaterialButton(
-              onPressed: () async{
-                int response = await sqlDb.updateData("UPDATE 'notes' SET 'note' = 'note five' WHERE id = 5");
+              onPressed: () async {
+                int response = await sqlDb.updateData(
+                    "UPDATE 'notes' SET 'note' = 'note five' WHERE id = 5");
                 print(response);
               },
               color: Colors.red,
@@ -62,7 +66,16 @@ class _SimpleAppState extends State<SimpleApp> {
               child: const Text('Update Data'),
             ),
           ),
-
+          Center(
+            child: MaterialButton(
+              onPressed: () async {
+                await sqlDb.myDeleteDatabase();
+              },
+              color: Colors.red,
+              textColor: Colors.white,
+              child: const Text('Delete Database'),
+            ),
+          ),
         ],
       ),
     );
