@@ -39,6 +39,9 @@ dependencies:
   device_preview: ^1.2.0
   flutter_screenutil: ^5.9.3
   intl: ^0.19.0
+  shared_preferences: ^2.3.2
+  sqflite: ^2.3.3+1
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
     - assets/images/
     - assets/images/women_shop/
     - assets/images/news/
+    - assets/images/honeyBoom/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
