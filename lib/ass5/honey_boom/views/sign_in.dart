@@ -155,12 +155,8 @@ class _SignInState extends State<SignIn> {
                               const Text('Remember me'),
                             ],
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Forget Password?',
-                              style: TextStyle(color: Colors.black),
-                            ),
+                          const Text(
+                            'Forget Password?',
                           ),
                         ],
                       ),
