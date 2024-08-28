@@ -15,15 +15,15 @@ class SqlDb {
   initialDb() async {
     String databasePath = await getDatabasesPath();
     String path = join(databasePath, 'database.db'); //databasePath/database.db
-    Database myDb = await openDatabase(path, onCreate: _onCreate,version: 1,onUpgrade: _onUpgrade);
+    Database myDb = await openDatabase(path, onCreate: _onCreate,version: 2,onUpgrade: _onUpgrade);
     return myDb;
   }
 
   _onCreate(Database db, int version) async {
     await db.execute('''
     CREATE TABLE 'notes' (
-      id INTEGER AUTOINCREMENT NOT NULL PRIMARY KEY,
-      notes TEXT NOT NULL
+      'id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      'note' TEXT NOT NULL
     )
     ''');
     print('Create Database');
@@ -31,6 +31,7 @@ class SqlDb {
 
   _onUpgrade(Database db, int oldVersion,int newVersion) async {
     // Implement database upgrade logic if needed
+    print('onUpgrade');
   }
 
   // Select
