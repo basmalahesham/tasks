@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashView.routeName,
       routes: {
         SplashView.routeName: (context) => const SplashView(),
-        SignIn.routeName: (context) =>  SignIn(),
-        HomeView.routeName: (context) => HomeView(),
+        SignIn.routeName: (context) =>  const SignIn(),
+        HomeView.routeName: (context) => const HomeView(),
         ProductDetails.routeName: (context) => ProductDetails(),
       },
     );

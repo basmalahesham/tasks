@@ -21,18 +21,10 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    _loadEmail();
+    loadData();
   }
 
-  Future<void> _loadEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    emailController.text = prefs.getString('email') ?? '';
-    passwordController.text = prefs.getString('password') ?? '';
-    isChecked = prefs.getBool('rememberMe') ?? false;
-    setState(() {});
-  }
-
-  Future<void> _saveEmail() async {
+  Future<void> saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (isChecked) {
       prefs.setString('email', emailController.text);
@@ -43,6 +35,14 @@ class _SignInState extends State<SignIn> {
       prefs.remove('password');
       prefs.remove('rememberMe');
     }
+  }
+
+  Future<void> loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    emailController.text = prefs.getString('email') ?? '';
+    passwordController.text = prefs.getString('password') ?? '';
+    isChecked = prefs.getBool('rememberMe') ?? false;
+    setState(() {});
   }
 
   @override
@@ -144,6 +144,7 @@ class _SignInState extends State<SignIn> {
                           Row(
                             children: [
                               Checkbox(
+                                activeColor: Colors.green,
                                 value: isChecked,
                                 onChanged: (value) {
                                   setState(() {
@@ -174,7 +175,7 @@ class _SignInState extends State<SignIn> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await _saveEmail(); // Save email if conditions are met
+                      await saveData(); // Save email if conditions are met
                       Navigator.pushReplacementNamed(
                         context,
                         HomeView.routeName,
