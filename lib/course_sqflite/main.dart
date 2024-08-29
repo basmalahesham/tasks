@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:optical/course_sqflite/add_note.dart';
 import 'package:optical/course_sqflite/home.dart';
 
+import 'edit_note.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,6 +18,7 @@ class MyApp extends StatelessWidget {
       home: Home(),
       routes: {
         AddNote.routeName: (context) => AddNote(),
+        EditNote.routeName: (context) => EditNote(),
       },
     );
   }

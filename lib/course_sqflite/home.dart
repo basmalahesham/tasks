@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:optical/course_sqflite/add_note.dart';
+import 'package:optical/course_sqflite/edit_note.dart';
+import 'package:optical/course_sqflite/model.dart';
 import 'package:optical/course_sqflite/sqldb.dart';
 
 class Home extends StatefulWidget {
@@ -63,7 +65,15 @@ class _HomeState extends State<Home> {
                               ),
                               IconButton(
                                 onPressed: () {
-
+                                  Navigator.pushNamed(
+                                    context,
+                                    EditNote.routeName,
+                                    arguments: Model(
+                                      note: snapshot.data![index]['note'],
+                                      title: snapshot.data![index]['title'],
+                                      id: snapshot.data![index]['id'],
+                                    ),
+                                  );
                                 },
                                 icon: Icon(
                                   Icons.edit,

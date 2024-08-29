@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:optical/course_sqflite/home.dart';
+import 'package:optical/course_sqflite/model.dart';
 import 'package:optical/course_sqflite/sqldb.dart';
 
-class AddNote extends StatefulWidget {
-  const AddNote({super.key});
-  static const String routeName = 'addNotes';
+class EditNote extends StatefulWidget {
+  const EditNote({super.key});
+  static const String routeName = 'edit_note';
 
   @override
-  State<AddNote> createState() => _AddNoteState();
+  State<EditNote> createState() => _EditNoteState();
 }
 
-class _AddNoteState extends State<AddNote> {
+class _EditNoteState extends State<EditNote> {
   SqlDb sqlDb = SqlDb();
 
   GlobalKey<FormState> formState = GlobalKey();
@@ -20,6 +21,9 @@ class _AddNoteState extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)!.settings.arguments as Model;
+    note.text = args.note;
+    title.text = args.title;
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Notes'),
@@ -51,10 +55,12 @@ class _AddNoteState extends State<AddNote> {
                   Center(
                     child: MaterialButton(
                       onPressed: () async {
-                        int response = await sqlDb.insetData(
+                        int response = await sqlDb.updateData(
                           '''
-                          INSERT INTO notes ('note' , 'title' )
-                          VALUES ('${note.text}', '${title.text}')
+                          UPDATE notes SET 
+                          note  = '${note.text}',
+                          title = '${title.text}'
+                          WHERE id = ${args.id}
                           ''',
                         );
                         if (response > 0) {
@@ -62,15 +68,15 @@ class _AddNoteState extends State<AddNote> {
                             MaterialPageRoute(
                               builder: (context) => Home(),
                             ),
-                            (route) => false,
+                                (route) => false,
                           );
-                         // Navigator.pop(context);
+                          // Navigator.pop(context);
 
                         }
                       },
                       color: Colors.blue,
                       textColor: Colors.white,
-                      child: const Text('Add Note'),
+                      child: const Text('Edit Note'),
                     ),
                   ),
                 ],
