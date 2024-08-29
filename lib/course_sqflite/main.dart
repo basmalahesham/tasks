@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sqflite Course',
-      home: Home(),
+      home: const Home(),
       routes: {
-        AddNote.routeName: (context) => AddNote(),
-        EditNote.routeName: (context) => EditNote(),
+        AddNote.routeName: (context) => const AddNote(),
+        EditNote.routeName: (context) => const EditNote(),
       },
     );
   }

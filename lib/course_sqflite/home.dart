@@ -14,8 +14,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   SqlDb sqlDb = SqlDb();
 
-  Future<List<Map>> readData() async {
+  /*Future<List<Map>> readData() async {
     List<Map> response = await sqlDb.readData("SELECT * FROM notes");
+    print(response);
+    return response;
+  }*/
+  Future<List<Map>> readData() async {
+    List<Map> response = await sqlDb.readData2("notes");
     print(response);
     return response;
   }
@@ -30,78 +35,79 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.of(context).pushNamed(AddNote.routeName);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
-      body: Container(
-        child: ListView(
-          children: [
-            FutureBuilder(
-              future: readData(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<Map>> snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          title: Text("${snapshot.data![index]['title']}"),
-                          subtitle: Text("${snapshot.data![index]['note']}"),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  int response = await sqlDb.deleteData(
-                                      "DELETE FROM notes WHERE id = ${snapshot.data![index]['id']}");
-                                  setState(() {});
-                                },
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
+      body: ListView(
+        children: [
+          FutureBuilder(
+            future: readData(),
+            builder: (BuildContext context, AsyncSnapshot<List<Map>> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text("${snapshot.data![index]['title']}"),
+                        subtitle: Text("${snapshot.data![index]['note']}"),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () async {
+                                /*int response = await sqlDb.deleteData(
+                                    "DELETE FROM notes WHERE id = ${snapshot.data![index]['id']}");*/
+                                int response = await sqlDb.deleteData2(
+                                  'notes',
+                                  'id=${snapshot.data![index]['id']}',
+                                );
+                                setState(() {});
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    EditNote.routeName,
-                                    arguments: Model(
-                                      note: snapshot.data![index]['note'],
-                                      title: snapshot.data![index]['title'],
-                                      id: snapshot.data![index]['id'],
-                                    ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: Colors.red,
-                                ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  EditNote.routeName,
+                                  arguments: Model(
+                                    note: snapshot.data![index]['note'],
+                                    title: snapshot.data![index]['title'],
+                                    id: snapshot.data![index]['id'],
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.red,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  );
-                }
-                return const Center(child: CircularProgressIndicator());
+                      ),
+                    );
+                  },
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+          Center(
+            child: MaterialButton(
+              onPressed: () async {
+                await sqlDb.myDeleteDatabase();
               },
+              color: Colors.red,
+              textColor: Colors.white,
+              child: const Text('Delete Database'),
             ),
-            Center(
-              child: MaterialButton(
-                onPressed: () async {
-                  await sqlDb.myDeleteDatabase();
-                },
-                color: Colors.red,
-                textColor: Colors.white,
-                child: const Text('Delete Database'),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

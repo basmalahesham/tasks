@@ -44,7 +44,7 @@ class SqlDb {
 
   _onUpgrade(Database db, int oldVersion, int newVersion) async {
     // Implement database upgrade logic if needed
-   // await db.execute('ALTER TABLE notes ADD COLUMN color TEXT');
+    // await db.execute('ALTER TABLE notes ADD COLUMN color TEXT');
     print('onUpgrade');
   }
 
@@ -73,6 +73,35 @@ class SqlDb {
   insetData(String sql) async {
     Database? myDb = await db;
     int response = await myDb!.rawInsert(sql);
+    return response;
+  }
+
+  // Select
+  readData2(String table) async {
+    Database? myDb = await db;
+    List<Map> response = await myDb!.query(table);
+    return response;
+  }
+
+  // Delete
+  deleteData2(String table, String? myWhere) async {
+    Database? myDb = await db;
+    int response = await myDb!.delete(table, where: myWhere);
+    return response;
+  }
+
+  // Update
+  updateData2(
+      String table, Map<String, Object?> values, String? myWhere) async {
+    Database? myDb = await db;
+    int response = await myDb!.update(table, values, where: myWhere);
+    return response;
+  }
+
+  // Insert
+  insetData2(String table, Map<String, Object?> values) async {
+    Database? myDb = await db;
+    int response = await myDb!.insert(table, values);
     return response;
   }
 

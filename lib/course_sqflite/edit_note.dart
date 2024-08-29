@@ -26,7 +26,7 @@ class _EditNoteState extends State<EditNote> {
     title.text = args.title;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Notes'),
+        title: const Text('Add Notes'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -38,40 +38,46 @@ class _EditNoteState extends State<EditNote> {
                 children: [
                   TextFormField(
                     controller: title,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'title',
                     ),
                   ),
-
                   TextFormField(
                     controller: note,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'note',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
                     child: MaterialButton(
                       onPressed: () async {
-                        int response = await sqlDb.updateData(
+                        /*int response = await sqlDb.updateData(
                           '''
                           UPDATE notes SET 
                           note  = '${note.text}',
                           title = '${title.text}'
                           WHERE id = ${args.id}
                           ''',
+                        );*/
+                        int response = await sqlDb.updateData2(
+                          'notes',
+                          {
+                            'note': '${note.text}',
+                            'title': '${title.text}',
+                          },
+                          'id=${args.id}',
                         );
                         if (response > 0) {
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                              builder: (context) => Home(),
+                              builder: (context) => const Home(),
                             ),
-                                (route) => false,
+                            (route) => false,
                           );
                           // Navigator.pop(context);
-
                         }
                       },
                       color: Colors.blue,

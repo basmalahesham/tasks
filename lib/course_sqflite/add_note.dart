@@ -22,7 +22,7 @@ class _AddNoteState extends State<AddNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Notes'),
+        title: const Text('Add Notes'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -34,38 +34,43 @@ class _AddNoteState extends State<AddNote> {
                 children: [
                   TextFormField(
                     controller: title,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'title',
                     ),
                   ),
-
                   TextFormField(
                     controller: note,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'note',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
                     child: MaterialButton(
                       onPressed: () async {
-                        int response = await sqlDb.insetData(
+                        /*int response = await sqlDb.insetData(
                           '''
                           INSERT INTO notes ('note' , 'title' )
                           VALUES ('${note.text}', '${title.text}')
                           ''',
+                        );*/
+                        int response = await sqlDb.insetData2(
+                          'notes',
+                          {
+                            'note': '${note.text}',
+                            'title': '${title.text}',
+                          },
                         );
                         if (response > 0) {
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                              builder: (context) => Home(),
+                              builder: (context) => const Home(),
                             ),
                             (route) => false,
                           );
-                         // Navigator.pop(context);
-
+                          // Navigator.pop(context);
                         }
                       },
                       color: Colors.blue,
