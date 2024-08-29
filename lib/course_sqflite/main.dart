@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:optical/course_sqflite/add_note.dart';
 import 'package:optical/course_sqflite/home.dart';
-import 'package:optical/course_sqflite/simpleApp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Sqflite Course',
       home: Home(),
+      routes: {
+        AddNote.routeName: (context) => AddNote(),
+      },
     );
   }
 }
