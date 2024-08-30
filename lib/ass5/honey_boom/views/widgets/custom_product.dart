@@ -14,8 +14,11 @@ class CustomProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetails.routeName,
-            arguments: model);
+        Navigator.pushNamed(
+          context,
+          ProductDetails.routeName,
+          arguments: model,
+        );
       },
       child: Card(
         color: const Color(0xfffdfdfd),

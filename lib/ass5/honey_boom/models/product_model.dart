@@ -7,6 +7,7 @@ class ProductModel {
   // Default constructor
   ProductModel({this.image, this.title, this.price, this.id});
 
+
   // Named constructor that creates an instance from a map
   ProductModel.fromDb(Map<String, dynamic> map) {
     image = map['image'];

@@ -84,6 +84,12 @@ class ProductDataBase {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+  Future<void> addMultipleProducts(List<ProductModel> products) async {
+    for (var product in products) {
+      await addProduct(product);
+    }
+  }
+
 
   Future<int> updateProduct(ProductModel newProduct) async {
     var client = await db;

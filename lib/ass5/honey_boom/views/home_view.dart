@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:optical/ass5/honey_boom/database/database.dart';
 import 'package:optical/ass5/honey_boom/models/product_model.dart';
 import 'package:optical/ass5/honey_boom/views/widgets/custom_grid_view.dart';
 
@@ -29,25 +30,25 @@ class _HomeViewState extends State<HomeView> {
       image: 'assets/images/honeyBoom/image1.png',
       title: 'Honey',
       price: 233,
-      id: 1,
+      id: 2,
     ),
     ProductModel(
       image: 'assets/images/honeyBoom/image2.png',
       title: 'Honey',
       price: 233,
-      id: 1,
+      id: 3,
     ),
     ProductModel(
       image: 'assets/images/honeyBoom/image3.png',
       title: 'Honey',
       price: 233,
-      id: 1,
+      id: 4,
     ),
     ProductModel(
       image: 'assets/images/honeyBoom/image4.png',
       title: 'Honey',
       price: 233,
-      id: 1,
+      id: 5,
     ),
   ];
 
@@ -117,6 +118,23 @@ class _HomeViewState extends State<HomeView> {
     ),
   ];
 
+  final db = ProductDataBase();
+  List<ProductModel> products = [];
+  @override
+  void initState() {
+    super.initState();
+    _insertAndFetchProducts();
+  }
+
+  Future<void> _insertAndFetchProducts() async {
+    await db.addMultipleProducts(productModel);
+
+    List<ProductModel> fetchedProducts = await db.fetchAll();
+    setState(() {
+      products = fetchedProducts;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -183,9 +201,9 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.all(16.0),
           child: TabBarView(
             children: [
-              CustomGridView(productModel: productModel),
-              CustomGridView(productModel: productModel2),
-              CustomGridView(productModel: productModel3),
+              CustomGridView(productModel: products),
+              CustomGridView(productModel: products),
+              CustomGridView(productModel: products),
             ],
           ),
         ),
